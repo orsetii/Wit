@@ -35,11 +35,11 @@ public class InitCommand : ICliCommand
 
     public void Handle(string dir)
     {
-        _dir = dir;
+        _dir = Path.GetFullPath(dir);
         // The `dir` passed in here will be either the path specified in cli or the CWD as is the default value.
 
         CreateGitDirectories();
-        Console.WriteLine($"Initialized empty Wit repository in {Path.GetFullPath(_dir)}");
+        Console.WriteLine($"Initialized empty Wit repository in {_dir}");
     }
 
 
