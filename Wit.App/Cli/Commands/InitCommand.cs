@@ -1,20 +1,28 @@
 using System.CommandLine.Invocation;
-using System;
 using System.CommandLine;
+using Wit.Services;
+
 namespace Wit.App.Cli.Commands;
 
 
 
 public class InitCommand : ICliCommand
 {
+    private string _dir = "";
 
-    public void Handle(string dir)
+    private readonly IDirectoryManager _directoryManager;
+
+    public InitCommand(IDirectoryManager directoryManager)
     {
-        // The `dir` passed in here will be either the path specified in cli or the CWD as is the default value.
-        Console.WriteLine($"{dir}");
+        _directoryManager = directoryManager;
     }
 
-    public Command CliCommand()
+    public InitCommand()
+    {
+        _directoryManager = new DirectoryManager();
+    }
+
+    public Command CreateCommand()
     {
         var cmd = new Command("init", "Initialize a new repository.");
 
@@ -23,6 +31,36 @@ public class InitCommand : ICliCommand
         cmd.Handler = CommandHandler.Create(Handle);
 
         return cmd;
+    }
+
+    public void Handle(string dir)
+    {
+        _dir = dir;
+        // The `dir` passed in here will be either the path specified in cli or the CWD as is the default value.
+
+        CreateGitDirectories();
+        Console.WriteLine($"Initialized empty Wit repository in {Path.GetFullPath(_dir)}");
+    }
+
+
+    private void CreateGitDirectories()
+    {
+
+        // Generate and create the git directory
+        var gitDirPath = CreateDirUsingDirectoryArgument(_dir, ".git");
+
+        // Create objects directory
+        CreateDirUsingDirectoryArgument(gitDirPath, "objects");
+
+        // Create refs directory
+        CreateDirUsingDirectoryArgument(gitDirPath, "refs");
+    }
+
+    private string CreateDirUsingDirectoryArgument(string dir, string toAppendPath)
+    {
+        var path = Path.Combine(dir, toAppendPath);
+        _directoryManager.Create(path);
+        return path;
     }
 
 }

@@ -13,7 +13,7 @@ public static class Program
     public static async Task<int> Main(string[] args)
     {
         var cmd = new RootCommand();
-        cmd.AddCommand(new InitCommand().CliCommand());
+        cmd.AddCommand(new InitCommand().CreateCommand());
 
         return await cmd.InvokeAsync(args);
     }
