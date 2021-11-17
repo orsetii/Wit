@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Wit.App.Cli.Commands;
+using Wit.Cli.Commands;
 
-namespace Wit.App;
+namespace Wit;
 public static class Program
 {
     public static async Task<int> Main(string[] args)
@@ -24,5 +24,6 @@ public static class Program
     {
 
         cmd.AddCommand(new InitCommand().CreateCommand());
+        cmd.AddCommand(new CommitCommand().CreateCommand());
     }
 }
