@@ -13,8 +13,16 @@ public static class Program
     public static async Task<int> Main(string[] args)
     {
         var cmd = new RootCommand();
-        cmd.AddCommand(new InitCommand().CreateCommand());
+        AddCommands(cmd);
+
 
         return await cmd.InvokeAsync(args);
+    }
+
+
+    public static void AddCommands(RootCommand cmd)
+    {
+
+        cmd.AddCommand(new InitCommand().CreateCommand());
     }
 }
