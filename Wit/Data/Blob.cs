@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Wit.Services;
 
-namespace Wit.GitData
+namespace Wit.Data
 {
     public class Blob : IGitObject
     {
         private byte[] _data;
 
-        public string GitType => "blob";
+        public GitObjectType GitType => GitObjectType.Blob;
 
 
         public byte[] Data => _data;
