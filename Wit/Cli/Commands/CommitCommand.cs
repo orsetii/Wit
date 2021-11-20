@@ -19,7 +19,7 @@ namespace Wit.Cli.Commands
 
         public void Handle()
         {
-            var ws = new Workspace("..");
+            var ws = new Workspace();
             ws.ListFiles();
         }
 
