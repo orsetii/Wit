@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using Wit.Cli.Commands;
 using Wit.Data;
+using Wit.Utils;
 using Xunit;
 
 namespace Wit.Test;
@@ -32,9 +34,20 @@ public class DatabaseTest
     public void WriteObjectCorrectCompression()
     {
         var cc = new CommitCommand(tempFolder);
-        cc.Handle();
+        cc.Handle(null, null);
         var files = Directory.GetFiles(Path.Combine(tempFolder, ".git"), "*.*", SearchOption.AllDirectories);
         var db = Database.ReadCompressedFile(files[0]);
+    }
+
+    [Fact]
+    public void stringrepr()
+    {
+        var entryList = new List<Entry>();
+        
+        entryList.Add(new Entry("pisswaffle", new Oid("bob")));
+        entryList.Add(new Entry("burgerking", new Oid("askmgjnajkgnajkdgn")));
+        var cls = new Tree(entryList);
+        var res = cls.Data;
     }
     
 }
