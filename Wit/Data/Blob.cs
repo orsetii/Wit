@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wit.Services;
+using Wit.Utils;
 
 namespace Wit.Data
 {
@@ -15,6 +16,8 @@ namespace Wit.Data
 
 
         public byte[] Data => _data;
+
+        public Oid Oid => new(Data, false);
 
         public Blob(string data)
         {
