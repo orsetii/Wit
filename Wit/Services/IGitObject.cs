@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-
+﻿
 namespace Wit.Services
 {
     public interface IGitObject
@@ -21,6 +14,9 @@ namespace Wit.Services
         public string Value { get; }
 
         public static GitObjectType Blob => new("blob");
+        public static GitObjectType Tree => new("tree");
+        public static GitObjectType Entry => new("entry");
+        public static GitObjectType Commit => new("commit");
 
         public override string ToString()
         {
