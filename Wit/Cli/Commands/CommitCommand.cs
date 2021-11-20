@@ -52,6 +52,7 @@ namespace Wit.Cli.Commands
             var cmd = new Command("commit", "Commit changes to the repository.");
             cmd.AddOption(new Option("--author-email", "The name of the author of this commit"));
             cmd.AddOption(new Option("--author-name", "The name of the author of this commit"));
+            cmd.AddOption(new Option("--message", "Commit Message"));
 
             cmd.Handler = CommandHandler.Create(Handle);
 
@@ -59,7 +60,7 @@ namespace Wit.Cli.Commands
         }
 
 
-        public void Handle(string? authorEmail, string? authorName)
+        public void Handle(string? authorEmail, string? authorName, string? message)
         {
             _author = new Author(authorName, authorEmail);
             
