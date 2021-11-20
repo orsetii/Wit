@@ -26,7 +26,7 @@ public class InitCommand : ICliCommand
     {
         var cmd = new Command("init", "Initialize a new repository.");
 
-        cmd.Add(new Option("--dir", "Intialize a new repository", typeof(string), () => Directory.GetCurrentDirectory()));
+        cmd.Add(new Option("--dir", "Initialize a new repository", typeof(string), () => Directory.GetCurrentDirectory()));
 
         cmd.Handler = CommandHandler.Create(Handle);
 
@@ -42,25 +42,16 @@ public class InitCommand : ICliCommand
         Console.WriteLine($"Initialized empty Wit repository in {_dir}");
     }
 
-
     private void CreateGitDirectories()
     {
 
         // Generate and create the git directory
-        var gitDirPath = CreateDirUsingDirectoryArgument(_dir, ".git");
+        var gitDirPath = Path.Combine(_dir, ".git");
 
-        // Create objects directory
-        CreateDirUsingDirectoryArgument(gitDirPath, "objects");
+        _directoryManager.Create(gitDirPath);
 
-        // Create refs directory
-        CreateDirUsingDirectoryArgument(gitDirPath, "refs");
-    }
-
-    private string CreateDirUsingDirectoryArgument(string dir, string toAppendPath)
-    {
-        var path = Path.Combine(dir, toAppendPath);
-        _directoryManager.Create(path);
-        return path;
+        _directoryManager.Create(Path.Combine(gitDirPath, "objects"));
+        _directoryManager.Create(Path.Combine(gitDirPath, "refs"));
     }
 
 }
