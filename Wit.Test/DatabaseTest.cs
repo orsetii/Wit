@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Wit.Cli.Commands;
+using Wit.Core;
 using Wit.Data;
 using Wit.Utils;
 using Xunit;
@@ -34,7 +35,7 @@ public class DatabaseTest
     public void WriteObjectCorrectCompression()
     {
         var cc = new CommitCommand(tempFolder);
-        cc.Handle(null, null);
+        cc.Handle(null, null, null);
         var files = Directory.GetFiles(Path.Combine(tempFolder, ".git"), "*.*", SearchOption.AllDirectories);
         var db = Database.ReadCompressedFile(files[0]);
     }
@@ -48,6 +49,9 @@ public class DatabaseTest
         entryList.Add(new Entry("burgerking", new Oid("askmgjnajkgnajkdgn")));
         var cls = new Tree(entryList);
         var res = cls.Data;
+
+        var commit = new Commit(new Oid("bob"), new Author("bob", "bob@bob.com"), "THIS CODE IS PROVIDED AS IS");
+        res = commit.Data;
     }
     
 }
