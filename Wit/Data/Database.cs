@@ -23,11 +23,11 @@ namespace Wit.Data
 
         public void Store(IGitObject gitObject)
         {
+            // TODO we may need to hex-encode this differently, as it could(?) be converted to a string of the hex instead of the hex raw
             var content = Encoding.Default.GetBytes($"{gitObject.GitType} {gitObject.Data.Length}\0")
                                                         .Concat(gitObject.Data).ToArray();
 
-            var oid = SHA1.Create().ComputeHash(content);
-            WriteObject(oid, content);
+            WriteObject(new Utils.Oid(content, false).Data, content);
         }
 
         private void WriteObject(byte[] oid, byte[] content)
